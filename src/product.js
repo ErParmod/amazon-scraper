@@ -22,14 +22,18 @@ const product = async (query) => {
 
   var price = null;
   var original_price = null;
+  var product_id = null;
 
   try {
-    var pricediv = product_page.split(/<div id="unifiedPrice_feature_div".*>/g);
-
-    original_price = pricediv[1]
-      .split('<span class="a-offscreen">')[1]
-      .split("</span>")[0];
-
+    var pricediv = product_page.split(/<div id="corePriceDisplay_desktop_feature_div".*>/g);
+    var offscreen = pricediv[1].split('<span class="a-offscreen">');
+    original_price = offscreen[2].split('</span>')[0];
+    if(!original_price.includes('₹')){
+          original_price = pricediv[1]
+          .split('<span class="a-offscreen">')[1]
+          .split("</span>")[0];
+    }
+    product_page.split('<input type="hidden" id="ASIN" name="ASIN" value="')[1].split('">')[0];
     try {
       price = pricediv[1]
         .split(
@@ -119,6 +123,7 @@ const product = async (query) => {
       in_stock,
       rating_details,
       features,
+      product_id,
       product_link: `https://www.amazon.in/${query}`,
     };
   } catch (err) {
