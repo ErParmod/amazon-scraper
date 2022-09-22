@@ -33,7 +33,7 @@ const product = async (query) => {
           .split('<span class="a-offscreen">')[1]
           .split("</span>")[0];
     }
-    product_page.split('<input type="hidden" id="ASIN" name="ASIN" value="')[1].split('">')[0];
+    product_id = product_page.split('<input type="hidden" id="ASIN" name="ASIN" value="')[1].split('">')[0];
     try {
       price = pricediv[1]
         .split(
